@@ -1,15 +1,28 @@
-import {UserList} from "./components/UserList.jsx";
-import {useUsers} from "./hooks/useUsers.js";
-import {UserModalForm} from "./components/UserModalForm.jsx";
+
 import {UserPage} from "./pages/UserPage.jsx";
+import {useAuth} from "./auth/hooks/useAuth.js";
+import {Navbar} from "./components/layout/Navbar.jsx";
+import {LoginPage} from "./auth/pages/LoginPage.jsx";
 
 export const UsersApp = () => {
-
+    const { login, handlerLogin, handlerLogout } = useAuth();
 
     return    (
         <>
-        <h1>Store</h1>
-            <UserPage/>
+
+            {
+                login.isAuth ?
+                    (
+                       <>
+                           <Navbar login={ login }
+                                   handlerLogout={handlerLogout}/>
+                           <UserPage/>
+                       </>
+
+                    ):
+                    <LoginPage handlerLogin={handlerLogin}/>
+            }
+
         </>
     )
 }
